@@ -1,6 +1,8 @@
 /** @jsxImportSource theme-ui */
 import logo from './logo.svg';
 import './App.css';
+import { css, ThemeProvider, useThemeUI } from 'theme-ui';
+import { css as createClassName } from '@emotion/css'
 
 declare global {
   namespace JSX {
@@ -28,8 +30,10 @@ class MyWebComponent extends HTMLElement {
 customElements.get('my-web-component') ||
   customElements.define('my-web-component', MyWebComponent);
 
+  const theme = {colors: {text: 'green'}};
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -45,10 +49,11 @@ function App() {
           Learn React
         </a>
         <p>
-          <my-web-component sx={{color: 'green'}}/>
+          <my-web-component class={createClassName(css({color: 'text'})(theme))} />
         </p>
       </header>
     </div>
+    </ThemeProvider>
   );
 }
 
